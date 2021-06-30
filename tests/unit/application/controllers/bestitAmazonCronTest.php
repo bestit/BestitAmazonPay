@@ -323,22 +323,20 @@ class bestitAmazonCronTest extends bestitAmazon4OxidUnitTestCase
 
         $oBestitAmazonIpn = $this->_getObject($oContainer);
         self::assertEquals('bestitamazonpay4oxidcron.tpl', $oBestitAmazonIpn->render());
-        self::assertAttributeEquals(
+        self::assertEquals(
             array('sError' => 'ERP mode is ON (Module settings)'),
-            '_aViewData',
-            $oBestitAmazonIpn
+            $oBestitAmazonIpn->getViewData()
         );
 
         self::assertEquals('bestitamazonpay4oxidcron.tpl', $oBestitAmazonIpn->render());
-        self::assertAttributeEquals(
+        self::assertEquals(
             array('sError' => 'Trigger Authorise via Cronjob mode is turned Off (Module settings)'),
-            '_aViewData',
-            $oBestitAmazonIpn
+            $oBestitAmazonIpn->getViewData()
         );
 
         self:self::setValue($oBestitAmazonIpn, '_aViewData', array());
         self::assertEquals('bestitamazonpay4oxidcron.tpl', $oBestitAmazonIpn->render());
-        self::assertAttributeEquals(
+        self::assertEquals(
             array(
                 'sMessage' => 'Authorized Order #234 - Status updated to: authorizationStateValue<br/>'
                     .'Declined Order #234 - Status updated to: referenceStatusValue<br/>'
@@ -348,8 +346,7 @@ class bestitAmazonCronTest extends bestitAmazon4OxidUnitTestCase
                     .'Order #234 - Closed<br/>'
                     .'Done'
             ),
-            '_aViewData',
-            $oBestitAmazonIpn
+            $oBestitAmazonIpn->getViewData()
         );
     }
 
@@ -460,37 +457,33 @@ class bestitAmazonCronTest extends bestitAmazon4OxidUnitTestCase
         $oBestitAmazonIpn = $this->_getObject($oContainer);
 
         self::assertNull($oBestitAmazonIpn->amazonCall());
-        self::assertAttributeEquals(
+        self::assertEquals(
             array(
                 'sError' => 'Please specify operation you want to call (&operation=) '
                     .'and use &oxid= parameter to specify order ID or use &aParams[\'key\']=value'
             ),
-            '_aViewData',
-            $oBestitAmazonIpn
+            $oBestitAmazonIpn->getViewData()
         );
 
         self::setValue($oBestitAmazonIpn, '_aViewData', array());
         self::assertNull($oBestitAmazonIpn->amazonCall());
-        self::assertAttributeEquals(
+        self::assertEquals(
             array('sMessage' => "<pre>stdClass Object\n(\n    [0] => firstResponse\n)\n</pre>"),
-            '_aViewData',
-            $oBestitAmazonIpn
+            $oBestitAmazonIpn->getViewData()
         );
 
         self::setValue($oBestitAmazonIpn, '_aViewData', array());
         self::assertNull($oBestitAmazonIpn->amazonCall());
-        self::assertAttributeEquals(
+        self::assertEquals(
             array('sMessage' => "<pre>stdClass Object\n(\n    [0] => secondResponse\n)\n</pre>"),
-            '_aViewData',
-            $oBestitAmazonIpn
+            $oBestitAmazonIpn->getViewData()
         );
 
         self::setValue($oBestitAmazonIpn, '_aViewData', array());
         self::assertNull($oBestitAmazonIpn->amazonCall());
-        self::assertAttributeEquals(
+        self::assertEquals(
             array('sMessage' => "<pre>stdClass Object\n(\n    [0] => thirdResponse\n)\n</pre>"),
-            '_aViewData',
-            $oBestitAmazonIpn
+            $oBestitAmazonIpn->getViewData()
         );
     }
 }
